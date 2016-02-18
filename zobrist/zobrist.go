@@ -10,8 +10,8 @@ import (
 // Table2D is zobrist 2d hash table
 type Table2D [][][]int64
 
-// Hash2D generate zobrist 2D hash
-func (t Table2D) Hash2D(board [][]int) int64 {
+// Hash generate zobrist hash
+func (t Table2D) Hash(board [][]int) int64 {
 	h := int64(0)
 
 	for i := 0; i < len(board); i++ {
