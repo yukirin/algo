@@ -1,2 +1,2 @@
 # algorithmGo
-典型的なアルゴリズムのgolang実装  
+アルゴリズムのgolang実装  
