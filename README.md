@@ -28,3 +28,4 @@
 * union find
 * ワーシャルフロイド
 * zobrist hash
+* 乱択クイックソート
