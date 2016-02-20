@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+// Epsilon is machine epsilon
+var Epsilon = math.Nextafter(1, 2) - 1
+
 // Factor is prime factorization
 func Factor(n uint64) []uint64 {
 	if n <= 1 {
