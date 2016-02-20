@@ -95,15 +95,11 @@ func replace(n, m *Node) {
 
 // Enum lists the binary search tree
 func Enum(n *Node, fn func(*Node)) {
-	var f func(*Node)
-	f = func(n *Node) {
-		if n.L != nil {
-			f(n.L)
-		}
-		fn(n)
-		if n.R != nil {
-			f(n.R)
-		}
+	if n.L != nil {
+		Enum(n.L, fn)
 	}
-	f(n)
+	fn(n)
+	if n.R != nil {
+		Enum(n.R, fn)
+	}
 }
