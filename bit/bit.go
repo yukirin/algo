@@ -45,15 +45,3 @@ func Sum2D(bit [][]int64, a, b int) int64 {
 	}
 	return ret
 }
-
-// Init2D init BIT[][]
-func Init2D(bit [][]int64) {
-	for y := 1; y < len(bit); y++ {
-		for x := 1; x < len(bit[0]); x++ {
-			w, h := x+(x&-x), y+(y&-y)
-			if h < len(bit) && w < len(bit[0]) {
-				bit[h][w] += bit[y][x]
-			}
-		}
-	}
-}
