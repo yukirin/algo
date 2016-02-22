@@ -32,3 +32,4 @@
 * 二分探索木
 * 計算機イプシロン
 * Binary Indexed Tree
+* セグメント木 (RMQ)
