@@ -33,3 +33,4 @@
 * 計算機イプシロン
 * Binary Indexed Tree
 * セグメント木 (RMQ)
+* 最長増加部分列
