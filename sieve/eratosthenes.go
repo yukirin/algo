@@ -20,7 +20,7 @@ func Eratosthenes(n int) []int {
 		}
 	}
 
-	l := n / int(math.Floor(math.Log(float64(n))))
+	l := n / int(math.Ceil(math.Log(float64(n))))
 	primes := make([]int, 0, l)
 	for i, v := range list {
 		if v {
