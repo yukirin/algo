@@ -1,6 +1,10 @@
 package math2
 
-import "math/big"
+import (
+	"math/big"
+
+	"github.com/yukirin/algo/sieve"
+)
 
 // Fact is n!
 func Fact(n uint64) uint64 {
@@ -73,7 +77,7 @@ func NCR(n, r uint64) uint64 {
 	return ret
 }
 
-// NCRM is nCr % p
+// NCRM is nCr % p (r<10^7, n,r < m, m:prime number)
 // http://www37.atwiki.jp/uwicoder/pages/2118.html
 func NCRM(n, r, p uint64) uint64 {
 	ret := uint64(1)
@@ -102,6 +106,40 @@ func NCRM(n, r, p uint64) uint64 {
 		r /= p
 	}
 	return ret
+}
+
+// NCRM2 is nCr % p (n<10^7, r,m: Any)
+// http://www37.atwiki.jp/uwicoder/pages/2118.html
+func NCRM2(n, r, mod uint64) uint64 {
+	if n < 0 || r < 0 || r > n {
+		return 0
+	}
+
+	if r > n/2 {
+		r = n - r
+	}
+
+	a := make([]uint64, n)
+	for i := uint64(0); i < n; i++ {
+		a[i] = n - i
+	}
+
+	ps := sieve.Eratosthenes(int(r))
+	for i := range ps {
+		p := uint64(ps[i])
+		for q := p; q <= r; q *= p {
+			m := n % q
+			for i, j := m, uint64(0); j < r/q; i, j = i+q, j+1 {
+				a[i] /= p
+			}
+		}
+	}
+
+	mul := uint64(1)
+	for i := uint64(0); i < r; i++ {
+		mul = mul * a[i] % mod
+	}
+	return mul
 }
 
 // NHR is nHr
