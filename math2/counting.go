@@ -64,6 +64,10 @@ func NRM(n, r, p uint64) uint64 {
 
 //NCR is nCr
 func NCR(n, r uint64) uint64 {
+	if n < 0 || r < 0 || r > n {
+		return 0
+	}
+
 	k := r
 	if k > n/2 {
 		k = n - r
