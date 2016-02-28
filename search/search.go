@@ -1,4 +1,4 @@
-// Package search defines a binary, ternary, golden section Search
+// Package search implements the binary, ternary, golden section Search
 // http://d.hatena.ne.jp/nodchip/20090303/1236058357
 package search
 
