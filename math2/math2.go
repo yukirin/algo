@@ -87,6 +87,7 @@ func Round1(f float64) float64 {
 }
 
 // BitCount is count the number of bits where 1 is set
+// http://qiita.com/fmhr/items/fa5a7d9b785456446768
 func BitCount(x uint64) uint64 {
 	x = (x & 0x5555555555555555) + ((x & 0xAAAAAAAAAAAAAAAA) >> 1)
 	x = (x & 0x3333333333333333) + ((x & 0xCCCCCCCCCCCCCCCC) >> 2)
