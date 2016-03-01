@@ -87,14 +87,14 @@ func Round1(f float64) float64 {
 }
 
 // BitCount is count the number of bits where 1 is set
-func BitCount(n int64) int64 {
-	c := int64(0)
-	for i := uint(0); i < 64; i++ {
-		if n>>i&1 == 1 {
-			c++
-		}
-	}
-	return c
+func BitCount(x uint64) uint64 {
+	x = (x & 0x5555555555555555) + ((x & 0xAAAAAAAAAAAAAAAA) >> 1)
+	x = (x & 0x3333333333333333) + ((x & 0xCCCCCCCCCCCCCCCC) >> 2)
+	x = (x & 0x0F0F0F0F0F0F0F0F) + ((x & 0xF0F0F0F0F0F0F0F0) >> 4)
+	x = (x & 0x00ff00ff00ff00ff) + ((x & 0xff00ff00ff00ff00) >> 8)
+	x = (x & 0x0000ffff0000ffff) + ((x & 0xffff0000ffff0000) >> 16)
+	x = (x & 0x00000000ffffffff) + ((x & 0xffffffff00000000) >> 32)
+	return x
 }
 
 // PowExp is 二分累乗法
