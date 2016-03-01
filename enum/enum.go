@@ -96,6 +96,10 @@ func Perm(a []int, r int, fn func([]int)) {
 		}
 	}
 
+	if r < 2 {
+		Comb(a, r, fn)
+		return
+	}
 	Comb(a, r, f)
 }
 
