@@ -72,24 +72,22 @@ func Perm(a []int, r int, fn func([]int)) {
 	f := func(s []int) {
 		copy(permL, s)
 
-		k, i := 1, 0
+		k := 1
 		c := make([]int, r+1)
 		for i := 1; i < len(c); i++ {
 			c[i] = i
 		}
 
 		for k < r {
+			i := 0
 			if k&1 == 1 {
 				i = c[k]
-			} else {
-				i = 0
 			}
 
 			permL[k], permL[i] = permL[i], permL[k]
 
 			fn(permL)
-			k = 1
-			for ; c[k] == 0; k++ {
+			for k = 1; c[k] == 0; k++ {
 				c[k] = k
 			}
 			c[k]--
