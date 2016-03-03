@@ -126,6 +126,22 @@ func PowMod(n, e, mod uint64) uint64 {
 	return a % mod
 }
 
+// RevEuclid enumerate disjoint value (gcd(a, b) == 1, a,b <= n)
+// http://cannonlake.blogspot.jp/2013/10/ab.html
+func RevEuclid(n int) [][]int {
+	ret := make([][]int, 0, 2000)
+
+	var f func(int, int, int)
+	f = func(m, c, d int) {
+		for e := c + d; e <= m; e += d {
+			ret = append(ret, []int{d, e})
+			f(n, d, e)
+		}
+	}
+	f(n, 1, 1)
+	return ret
+}
+
 // Xor128 is pseudo random number generator
 var Xor128 func() uint64
 
