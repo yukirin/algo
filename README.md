@@ -43,3 +43,6 @@
 * 組み合わせの列挙
 * 重複組み合わせの列挙
 * 互いに素な数の列挙
+
+## その他
+* [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
