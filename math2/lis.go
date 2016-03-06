@@ -1,4 +1,4 @@
-package str
+package math2
 
 import "sort"
 
