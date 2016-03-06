@@ -87,9 +87,9 @@ func (q *Deque) Front() int {
 	return q.s[q.h]
 }
 
-// Get get the element
-func (q *Deque) Get(i int) int {
-	index := q.h + i
+// Index to get the n -th element
+func (q *Deque) Index(n int) int {
+	index := q.h + n
 	if index >= len(q.s) {
 		index -= len(q.s)
 	}
