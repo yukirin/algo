@@ -1,7 +1,7 @@
-package euler
+package tree
 
-// Tour is euler tour ( [begin[i]:end[i]] )
-func Tour(root int, adjL [][]int) ([]int, []int, []int) {
+// EulerTour is euler tour ( [begin[i]:end[i]] )
+func EulerTour(root int, adjL [][]int) ([]int, []int, []int) {
 	tour := make([]int, 0, 2*len(adjL)-1)
 	begin, end := make([]int, len(adjL)), make([]int, len(adjL))
 	c := 0
