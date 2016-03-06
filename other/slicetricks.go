@@ -121,7 +121,7 @@ func main() {
 
 	// Filtering without allocating
 	a = newSlice()
-	b, f := a[:0], func(n int) bool { return n%2 == 1 }
+	b, f := a[:0], func(n int) bool { return n&1 == 1 }
 	for _, x := range a {
 		if f(x) {
 			b = append(b, x)

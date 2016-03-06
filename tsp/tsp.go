@@ -20,7 +20,7 @@ func Solve(towns int, dist [][]float64) float64 {
 			}
 
 			for k := uint(0); k < n; k++ {
-				if (i>>k)%2 == 1 {
+				if (i>>k)&1 == 1 {
 					continue
 				}
 
