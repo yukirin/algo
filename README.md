@@ -46,6 +46,7 @@
 * deque
 * Euler Tour
 * Lowest Common Ancestor
+* ベルマンフォード法
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
