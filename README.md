@@ -48,6 +48,7 @@
 * Lowest Common Ancestor
 * ベルマンフォード法
 * 平面幾何
+* 強連結成分分解
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
