@@ -4,7 +4,7 @@ import (
 	"container/heap"
 )
 
-type priorityQ [][2]int
+type priorityQ [][]int
 
 func (q priorityQ) Len() int {
 	return len(q)
@@ -19,7 +19,7 @@ func (q priorityQ) Swap(i, j int) {
 }
 
 func (q *priorityQ) Push(x interface{}) {
-	*q = append(*q, x.([2]int))
+	*q = append(*q, x.([]int))
 }
 
 func (q *priorityQ) Pop() interface{} {
@@ -41,10 +41,10 @@ func Search(s int, adjList [][][]int) []int {
 
 	q := make(priorityQ, 0, len(adjList))
 	heap.Init(&q)
-	heap.Push(&q, [2]int{s, 0})
+	heap.Push(&q, []int{s, 0})
 
 	for q.Len() != 0 {
-		n := q.Pop().([2]int)
+		n := q.Pop().([]int)
 		if used[n[0]] {
 			continue
 		}
@@ -62,7 +62,7 @@ func Search(s int, adjList [][][]int) []int {
 				continue
 			}
 			dist[next[0]] = cost
-			heap.Push(&q, [2]int{next[0], cost})
+			heap.Push(&q, []int{next[0], cost})
 		}
 	}
 	return dist

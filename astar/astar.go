@@ -10,7 +10,7 @@ type Node struct {
 	h    float64
 	Cost float64
 
-	Pos  [2]int
+	Pos  []int
 	Prev *Node
 }
 
@@ -42,8 +42,8 @@ func (q *Q) Pop() interface{} {
 }
 
 // Search is A* algorithm
-func Search(maze [][]int, s, g [2]int) *Node {
-	move := [][2]int{{-1, 0}, {1, 0}, {0, 1}, {0, -1}}
+func Search(maze [][]int, s, g []int) *Node {
+	move := [][]int{{-1, 0}, {1, 0}, {0, 1}, {0, -1}}
 	node := &Node{Pos: s}
 
 	maze[s[1]][s[0]] = 1
@@ -54,12 +54,12 @@ func Search(maze [][]int, s, g [2]int) *Node {
 
 	for q.Len() > 0 {
 		n := heap.Pop(&q).(*Node)
-		if n.Pos == g {
+		if n.Pos[0] == g[0] && n.Pos[1] == g[1] {
 			return n
 		}
 
 		for _, v := range move {
-			dst := [2]int{n.Pos[0] + v[0], n.Pos[1] + v[1]}
+			dst := []int{n.Pos[0] + v[0], n.Pos[1] + v[1]}
 			if maze[dst[1]][dst[0]] == 1 {
 				continue
 			}
