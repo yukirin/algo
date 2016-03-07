@@ -39,7 +39,7 @@ func Decomposition(adjL [][]int) [][]int {
 	}
 
 	for i := len(l) - 1; i >= 0; i-- {
-		g := make([]int, 0, len(rev)/2)
+		g := make([]int, 0, 50)
 		assign(l[i], &g)
 		if len(g) == 0 {
 			continue
