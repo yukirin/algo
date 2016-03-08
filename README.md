@@ -49,6 +49,7 @@
 * ベルマンフォード法
 * 平面幾何
 * 強連結成分分解
+* [suffix array](https://golang.org/pkg/index/suffixarray)
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
