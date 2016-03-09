@@ -123,3 +123,27 @@ func NearestP(p P, a, b P) P {
 	s := Dot(p.X-a.X, p.Y-a.Y, 0, ba.X, ba.Y, 0) / (ba.X*ba.X + ba.Y*ba.Y)
 	return P{a.X + s*ba.X, a.Y + s*ba.Y}
 }
+
+// SMCircle is smallest enclosing circle
+// http://eomole.hatenablog.com/entry/20100219/1292052417
+func SMCircle(ps []P) (P, float64) {
+	p, index := ps[0], 0
+	ratio, r := 0.5, 0.0
+
+	for c := 2 * math.Log2(1000000000); c >= 0; c-- {
+		for j := 0; j < 100; j++ {
+			max := 0.0
+			for i, v := range ps {
+				d := math.Hypot(v.X-p.X, v.Y-p.Y)
+				if d > max {
+					max, index = d, i
+				}
+			}
+			p.X += (ps[index].X - p.X) * ratio
+			p.Y += (ps[index].Y - p.Y) * ratio
+			r = max
+		}
+		ratio /= 2
+	}
+	return p, r
+}

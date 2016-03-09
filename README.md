@@ -50,6 +50,7 @@
 * 平面幾何
 * 強連結成分分解
 * QuickHull
+* 最小包含円
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
