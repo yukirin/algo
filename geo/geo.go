@@ -17,6 +17,20 @@ func Distance(a, b, c, x, y float64) float64 {
 	return math.Abs(a*x+b*y+c) / math.Sqrt(a*a+b*b)
 }
 
+// DistanceLS determine the distance between the point and the line segment
+func DistanceLS(p P, a, b P) float64 {
+	if Dot(b.X-a.X, b.Y-a.Y, 0, p.X-a.X, p.Y-a.Y, 0) < 0 {
+		return math.Hypot(p.X-a.X, p.Y-a.Y)
+	}
+
+	if Dot(a.X-b.X, a.Y-b.Y, 0, p.X-b.X, p.Y-b.Y, 0) < 0 {
+		return math.Hypot(p.X-b.X, p.Y-b.Y)
+	}
+
+	x, y, z := Cross(b.X-a.X, b.Y-a.Y, 0, p.X-a.X, p.Y-a.Y, 0)
+	return math.Sqrt(x*x+y*y+z*z) / math.Hypot(b.X-a.X, b.Y-a.Y)
+}
+
 // Dot is inner product
 func Dot(x1, y1, z1, x2, y2, z2 float64) float64 {
 	return x1*x2 + y1*y2 + z1*z2
@@ -94,4 +108,18 @@ func InPolygon(p P, ps []P) bool {
 		}
 	}
 	return true
+}
+
+// NearestP determmine the nearest point of the line segment from point
+func NearestP(p P, a, b P) P {
+	if Dot(b.X-a.X, b.Y-a.Y, 0, p.X-a.X, p.Y-a.Y, 0) < 0 {
+		return a
+	}
+
+	if Dot(a.X-b.X, a.Y-b.Y, 0, p.X-b.X, p.Y-b.Y, 0) < 0 {
+		return b
+	}
+	ba := P{b.X - a.X, b.Y - a.Y}
+	s := Dot(p.X-a.X, p.Y-a.Y, 0, ba.X, ba.Y, 0) / (ba.X*ba.X + ba.Y*ba.Y)
+	return P{a.X + s*ba.X, a.Y + s*ba.Y}
 }

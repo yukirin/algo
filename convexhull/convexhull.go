@@ -1,15 +1,14 @@
 package convexhull
 
-import "math"
+import (
+	"math"
 
-// Point represents the plane of the coordinate
-type Point struct {
-	X, Y float64
-}
+	"github.com/yukirin/algo/geo"
+)
 
 // Solve is Gift wrapping algorithm
-func Solve(ps []Point) []Point {
-	var chList []Point
+func Solve(ps []geo.P) []geo.P {
+	var chList []geo.P
 	a := nearest(ps)
 
 	for {
@@ -22,8 +21,8 @@ func Solve(ps []Point) []Point {
 				continue
 			}
 
-			p1 := &Point{b.X - a.X, b.Y - a.Y}
-			p2 := &Point{c.X - a.X, c.Y - a.Y}
+			p1 := &geo.P{b.X - a.X, b.Y - a.Y}
+			p2 := &geo.P{c.X - a.X, c.Y - a.Y}
 			v := product(p2, p1)
 			if v > 0 || (v == 0 && math.Hypot(p2.X, p2.Y) > math.Hypot(p1.X, p1.Y)) {
 				b = c
@@ -38,7 +37,7 @@ func Solve(ps []Point) []Point {
 	return chList
 }
 
-func nearest(ps []Point) Point {
+func nearest(ps []geo.P) geo.P {
 	min := ps[0]
 	for _, p := range ps {
 		if p.Y < min.Y {
@@ -46,7 +45,7 @@ func nearest(ps []Point) Point {
 		}
 	}
 
-	nearY := []Point{min}
+	nearY := []geo.P{min}
 	for _, p := range ps {
 		if min.Y == p.Y {
 			nearY = append(nearY, p)
@@ -62,6 +61,6 @@ func nearest(ps []Point) Point {
 	return min
 }
 
-func product(a, b *Point) float64 {
+func product(a, b *geo.P) float64 {
 	return a.X*b.Y - b.X*a.Y
 }
