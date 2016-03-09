@@ -4,7 +4,7 @@ import "math"
 
 // P is point
 type P struct {
-	x, y float64
+	X, Y float64
 }
 
 // Intersection finds the intersection of two straight lines (a1x+b1y+c1, a2x+b2y+c2)
@@ -29,21 +29,21 @@ func Cross(x1, y1, z1, x2, y2, z2 float64) (float64, float64, float64) {
 
 // IsOrthogonal determine whether two line segments are perpendicular to each other
 func IsOrthogonal(a1, a2, b1, b2 P) bool {
-	return Dot(a1.x-a2.x, a1.y-a2.y, 0, b1.x-b2.x, b1.y-b2.y, 0) == 0
+	return Dot(a1.X-a2.X, a1.Y-a2.Y, 0, b1.X-b2.X, b1.Y-b2.Y, 0) == 0
 }
 
 // IsParallel tests whether parallel two line segments
 func IsParallel(a1, a2, b1, b2 P) bool {
-	x, y, z := Cross(a1.x-a2.x, a1.y-a2.y, 0, b1.x-b2.x, b1.y-b2.y, 0)
+	x, y, z := Cross(a1.X-a2.X, a1.Y-a2.Y, 0, b1.X-b2.X, b1.Y-b2.Y, 0)
 	return x == 0 && y == 0 && z == 0
 }
 
 // IsIntersection determine whether two line segments intersect
 func IsIntersection(a1, a2, b1, b2 P) bool {
-	ta := (b1.x-b2.x)*(a1.y-b1.y) + (b1.y-b2.y)*(b1.x-a1.x)
-	tb := (b1.x-b2.x)*(a2.y-b1.y) + (b1.y-b2.y)*(b1.x-a2.x)
-	tc := (a1.x-a2.x)*(b1.y-a1.y) + (a1.y-a2.y)*(a1.x-b1.x)
-	td := (a1.x-a2.x)*(b2.y-a1.y) + (a1.y-a2.y)*(a1.x-b2.x)
+	ta := (b1.X-b2.X)*(a1.Y-b1.Y) + (b1.Y-b2.Y)*(b1.X-a1.X)
+	tb := (b1.X-b2.X)*(a2.Y-b1.Y) + (b1.Y-b2.Y)*(b1.X-a2.X)
+	tc := (a1.X-a2.X)*(b1.Y-a1.Y) + (a1.Y-a2.Y)*(a1.X-b1.X)
+	td := (a1.X-a2.X)*(b2.Y-a1.Y) + (a1.Y-a2.Y)*(a1.X-b2.X)
 	return tc*td < 0 && ta*tb < 0
 }
 
@@ -54,7 +54,7 @@ func Rotate(x, y, rad float64) (float64, float64) {
 
 // EquationL is Equation of a line (ax+by+c)
 func EquationL(a, b P) (float64, float64, float64) {
-	return b.y - a.y, a.x - b.x, a.y*b.x - a.x*b.y
+	return b.Y - a.Y, a.X - b.X, a.Y*b.X - a.X*b.Y
 }
 
 // Area2D to calculate the area of a polygon
@@ -67,4 +67,31 @@ func Area2D(ps ...[]float64) float64 {
 		sum += x * y
 	}
 	return math.Abs(sum) / 2
+}
+
+// PosL is tests whether a point is on the right or left side of the line segment
+func PosL(p P, a, b P) int {
+	x1, y1 := b.X-a.X, b.Y-a.Y
+	x2, y2 := p.X-a.X, p.Y-a.Y
+	c := x1*y2 - y1*x2
+	switch {
+	case c > 0:
+		return 1 // left
+	case c < 0:
+		return -1 // right
+	default:
+		return 0 // on the line
+	}
+}
+
+// InPolygon to the inside and outside judgment of a convex polygon
+func InPolygon(p P, ps []P) bool {
+	ps = append(ps, ps[0])
+	sign := PosL(p, ps[0], ps[1])
+	for i, v := range ps[1 : len(ps)-1] {
+		if sign*PosL(p, v, ps[i+2]) < 0 {
+			return false
+		}
+	}
+	return true
 }
