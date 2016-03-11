@@ -1,3 +1,5 @@
+// Package segment is (lazy) segment tree
+// http://www.npca.jp/works/magazine/2015_5/
 package segment
 
 import "math"

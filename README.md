@@ -51,6 +51,7 @@
 * 強連結成分分解
 * QuickHull
 * 最小包含円
+* 遅延型セグメント木
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
