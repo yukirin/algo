@@ -14,15 +14,6 @@ func NewLazyS(inits []int64) ([]int64, []int64) {
 	return t, make([]int64, len(t))
 }
 
-func lazyEval(i int, t, lazy []int64) {
-	t[i] += lazy[i]
-	if i < (len(t)+1)/2-1 {
-		lazy[i*2+1] += lazy[i]
-		lazy[i*2+2] += lazy[i]
-	}
-	lazy[i] = 0
-}
-
 // LazyUpdate update the lazy segment tree
 func LazyUpdate(a, b, i, l, r int, x int64, t, lazy []int64) {
 	if r <= a || b <= l {
@@ -66,4 +57,13 @@ func LazyQuery(a, b, i, l, r int, t, lazy []int64) int64 {
 		return vl
 	}
 	return vr
+}
+
+func lazyEval(i int, t, lazy []int64) {
+	t[i] += lazy[i]
+	if i < (len(t)+1)/2-1 {
+		lazy[i*2+1] += lazy[i]
+		lazy[i*2+2] += lazy[i]
+	}
+	lazy[i] = 0
 }
