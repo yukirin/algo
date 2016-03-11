@@ -60,7 +60,7 @@ func Update(i int, x int64, t []int64) {
 }
 
 // Query is a process for the interval
-func Query(a, b, i, l, r int, t []int64) int64 {
+func Query(a, b, l, r, i int, t []int64) int64 {
 	if r <= a || b <= l {
 		return math.MaxInt64
 	}

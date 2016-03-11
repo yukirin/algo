@@ -17,7 +17,7 @@ func NewLazyS(inits []int64) ([]int64, []int64) {
 }
 
 // LazyUpdate update the lazy segment tree
-func LazyUpdate(a, b, i, l, r int, x int64, t, lazy []int64) {
+func LazyUpdate(a, b, l, r, i int, x int64, t, lazy []int64) {
 	if r <= a || b <= l {
 		return
 	}
@@ -41,7 +41,7 @@ func LazyUpdate(a, b, i, l, r int, x int64, t, lazy []int64) {
 }
 
 // LazyQuery to run a query in the interval
-func LazyQuery(a, b, i, l, r int, t, lazy []int64) int64 {
+func LazyQuery(a, b, l, r, i int, t, lazy []int64) int64 {
 	lazyEval(i, t, lazy)
 
 	if r <= a || b <= l {
