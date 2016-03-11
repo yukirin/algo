@@ -29,8 +29,8 @@ func LazyUpdate(a, b, l, r, i int, x int64, t, lazy []int64) {
 	}
 
 	lazyEval(i, t, lazy)
-	LazyUpdate(a, b, i*2+1, l, (l+r)/2, x, t, lazy)
-	LazyUpdate(a, b, i*2+2, (l+r)/2, r, x, t, lazy)
+	LazyUpdate(a, b, l, (l+r)/2, i*2+1, x, t, lazy)
+	LazyUpdate(a, b, (l+r)/2, r, i*2+2, x, t, lazy)
 
 	if t[i*2+1] < t[i*2+2] {
 		t[i] = t[i*2+1]
@@ -52,8 +52,8 @@ func LazyQuery(a, b, l, r, i int, t, lazy []int64) int64 {
 		return t[i]
 	}
 
-	vl := LazyQuery(a, b, i*2+1, l, (l+r)/2, t, lazy)
-	vr := LazyQuery(a, b, i*2+2, (l+r)/2, r, t, lazy)
+	vl := LazyQuery(a, b, l, (l+r)/2, i*2+1, t, lazy)
+	vr := LazyQuery(a, b, (l+r)/2, r, i*2+2, t, lazy)
 
 	if vl < vr {
 		return vl

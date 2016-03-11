@@ -69,8 +69,8 @@ func Query(a, b, l, r, i int, t []int64) int64 {
 		return t[i]
 	}
 
-	vl := Query(a, b, i*2+1, l, (l+r)/2, t)
-	vr := Query(a, b, i*2+2, (l+r)/2, r, t)
+	vl := Query(a, b, l, (l+r)/2, i*2+1, t)
+	vr := Query(a, b, (l+r)/2, r, i*2+2, t)
 
 	if vl < vr {
 		return vl
