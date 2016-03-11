@@ -1,29 +1,37 @@
 package segment
 
+import (
+	"math"
+)
+
 // New return the initialized segment tree Inf (n == 2^p)
 func New(n int) []int64 {
 	if n&(n-1) != 0 {
 		return nil
 	}
 
-	const inf = 2<<62 - 1
-
 	t := make([]int64, n*2-1)
 	for i := range t {
-		t[i] = inf
+		t[i] = math.MaxInt64
 	}
 	return t
 }
 
-// NewS returns the initialization segment tree value of the slice (len(inits) == 2^p)
-func NewS(n int, inits []int64) []int64 {
-	if len(inits)&(len(inits)-1) != 0 {
-		return nil
+// NewS returns the initialization segment tree value of the slice
+func NewS(inits []int64) []int64 {
+	n := 1
+	for n < len(inits) {
+		n *= 2
 	}
 
 	t := make([]int64, n*2-1)
-	for i := 0; i < n; i++ {
+	for i := 0; i < len(inits); i++ {
 		t[n-1+i] = inits[i]
+	}
+
+	d := n - len(inits)
+	for i := 0; i < d; i++ {
+		t[n-1+len(inits)+i] = math.MaxInt64
 	}
 
 	for i := n - 2; i >= 0; i-- {
@@ -53,9 +61,8 @@ func Update(i int, x int64, t []int64) {
 
 // Query is a process for the interval
 func Query(a, b, i, l, r int, t []int64) int64 {
-	const inf = 2<<62 - 1
 	if r <= a || b <= l {
-		return inf
+		return math.MaxInt64
 	}
 
 	if a <= l && r <= b {
