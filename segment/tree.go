@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-// New return the initialized segment tree Inf (n == 2^p)
+// New return the initialized segment tree (n == 2^p)
 func New(n int) []int64 {
 	if n&(n-1) != 0 {
 		return nil

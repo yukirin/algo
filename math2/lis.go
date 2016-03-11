@@ -1,14 +1,15 @@
 package math2
 
-import "sort"
+import (
+	"math"
+	"sort"
+)
 
 // LIS is longest increasing subsequence
 func LIS(seq []int) int {
-	inf := 1<<63 - 1
-
 	dp := make([]int, len(seq))
 	for i := range dp {
-		dp[i] = inf
+		dp[i] = math.MaxInt64
 	}
 
 	for _, n := range seq {
@@ -16,5 +17,5 @@ func LIS(seq []int) int {
 		dp[i] = n
 	}
 
-	return sort.SearchInts(dp, inf)
+	return sort.SearchInts(dp, math.MaxInt64)
 }

@@ -2,6 +2,7 @@ package dijkstra
 
 import (
 	"container/heap"
+	"math"
 )
 
 type priorityQ [][]int
@@ -30,13 +31,11 @@ func (q *priorityQ) Pop() interface{} {
 
 //Search is dijkstra's algorithm
 func Search(s int, adjList [][][]int) []int {
-	inf := int(1e18)
-
 	count := 0
 	used := make([]bool, len(adjList))
 	dist := make([]int, len(adjList))
 	for i := range dist {
-		dist[i] = inf
+		dist[i] = math.MaxInt64
 	}
 
 	q := make(priorityQ, 0, len(adjList))

@@ -1,5 +1,9 @@
 package edmondskarp
 
+import (
+	"math"
+)
+
 // Solve is Edmonds Karp algorithm
 func Solve(s, t int, capa, edges [][]int) (int, [][]int) {
 	f := 0
@@ -27,7 +31,7 @@ func Solve(s, t int, capa, edges [][]int) (int, [][]int) {
 }
 
 func bfs(s, t int, capa, edges, flow [][]int) (int, []int) {
-	min := 1<<32 - 1
+	min := math.MaxInt64
 	p := make([]int, len(edges))
 	for i := range p {
 		p[i] = -1
