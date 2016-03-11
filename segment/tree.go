@@ -1,7 +1,11 @@
 package segment
 
-// New return the initialized segment tree Inf
+// New return the initialized segment tree Inf (n == 2^p)
 func New(n int) []int64 {
+	if n&(n-1) != 0 {
+		return nil
+	}
+
 	const inf = 2<<62 - 1
 
 	t := make([]int64, n*2-1)
@@ -11,8 +15,12 @@ func New(n int) []int64 {
 	return t
 }
 
-// NewS returns the initialization segment tree value of the slice
+// NewS returns the initialization segment tree value of the slice (len(inits) == 2^p)
 func NewS(n int, inits []int64) []int64 {
+	if len(inits)&(len(inits)-1) != 0 {
+		return nil
+	}
+
 	t := make([]int64, n*2-1)
 	for i := 0; i < n; i++ {
 		t[n-1+i] = inits[i]
