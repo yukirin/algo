@@ -147,3 +147,20 @@ func SMCircle(ps []P) (P, float64) {
 	}
 	return p, r
 }
+
+// Rad converts from the degree to the radian
+func Rad(d float64) float64 {
+	return d * math.Pi / 180
+}
+
+// Deg converts from the radian to the degree
+func Deg(r float64) float64 {
+	return r * 180 / math.Pi
+}
+
+// Angle determine the angle(radian) of two vectors
+func Angle(u, v P) float64 {
+	l := math.Hypot(u.X, u.Y) * math.Hypot(v.X, v.Y)
+	cos := Dot(u.X, u.Y, 0, v.X, v.Y, 0)
+	return math.Acos(cos / l)
+}
