@@ -1,14 +1,10 @@
 package convexhull
 
-import (
-	"math"
-
-	"github.com/yukirin/algo/geo"
-)
+import "math/cmplx"
 
 // Solve is Gift wrapping algorithm
-func Solve(ps []geo.P) []geo.P {
-	var chList []geo.P
+func Solve(ps []complex128) []complex128 {
+	var chList []complex128
 	a := nearest(ps)
 
 	for {
@@ -21,10 +17,9 @@ func Solve(ps []geo.P) []geo.P {
 				continue
 			}
 
-			p1 := &geo.P{b.X - a.X, b.Y - a.Y}
-			p2 := &geo.P{c.X - a.X, c.Y - a.Y}
+			p1, p2 := b-a, c-a
 			v := product(p2, p1)
-			if v > 0 || (v == 0 && math.Hypot(p2.X, p2.Y) > math.Hypot(p1.X, p1.Y)) {
+			if v > 0 || (v == 0 && cmplx.Abs(p2) > cmplx.Abs(p1)) {
 				b = c
 			}
 		}
@@ -37,30 +32,30 @@ func Solve(ps []geo.P) []geo.P {
 	return chList
 }
 
-func nearest(ps []geo.P) geo.P {
+func nearest(ps []complex128) complex128 {
 	min := ps[0]
 	for _, p := range ps {
-		if p.Y < min.Y {
+		if imag(p) < imag(min) {
 			min = p
 		}
 	}
 
-	nearY := []geo.P{min}
+	nearY := []complex128{min}
 	for _, p := range ps {
-		if min.Y == p.Y {
+		if imag(min) == imag(p) {
 			nearY = append(nearY, p)
 		}
 	}
 
 	min = nearY[0]
 	for _, p := range nearY {
-		if p.X < min.X {
+		if real(p) < real(min) {
 			min = p
 		}
 	}
 	return min
 }
 
-func product(a, b *geo.P) float64 {
-	return a.X*b.Y - b.X*a.Y
+func product(a, b complex128) float64 {
+	return real(a)*imag(b) - real(b)*imag(a)
 }
