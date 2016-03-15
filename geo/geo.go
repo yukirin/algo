@@ -78,7 +78,7 @@ func EquationL(a, b complex128) (float64, float64, float64) {
 }
 
 // Area2D to calculate the area of a polygon
-func Area2D(ps ...complex128) float64 {
+func Area2D(ps []complex128) float64 {
 	sum, ps := float64(0), append(ps, ps[0])
 	for i, v := range ps[:len(ps)-1] {
 		x, y := real(v)-real(ps[i+1]), imag(v)+imag(ps[i+1])
@@ -113,7 +113,7 @@ func InPolygon(p complex128, ps []complex128) bool {
 	return true
 }
 
-// NearestP determmine the nearest point of the line segment from point
+// NearestP determine the nearest point of the line segment from point
 func NearestP(p, a, b complex128) complex128 {
 	ab, ba, pa, pb := a-b, b-a, p-a, p-b
 	if Dot(ba, pa) < 0 {
@@ -124,6 +124,12 @@ func NearestP(p, a, b complex128) complex128 {
 		return b
 	}
 	return a + complex(Dot(pa, ba)/(real(ba)*real(ba)+imag(ba)*imag(ba)), 0)*ba
+}
+
+// NearestPL determine the nearest point of the straight line from point
+func NearestPL(p complex128, a, b, c float64) complex128 {
+	d, q := a*real(p)+b*imag(p)+c, a*a+b*b
+	return complex(real(p)-a*d/q, imag(p)-b*d/q)
 }
 
 // SMCircle is smallest enclosing circle
@@ -162,4 +168,57 @@ func Deg(r float64) float64 {
 // Angle determine the angle(radian) of two vectors
 func Angle(u, v complex128) float64 {
 	return cmplx.Phase(u / v)
+}
+
+// DivP is dividing point
+func DivP(a, b complex128, m, n float64) complex128 {
+	return complex((n*real(a)+m*real(b))/(m+n), (n*imag(a)+m*imag(b))/(m+n))
+}
+
+// GravityPA is gravity point of the polygon
+func GravityPA(ps []complex128) complex128 {
+	ps = append(ps, ps[0])
+	origin, xg, yg, sum := complex(0, 0), 0.0, 0.0, 0.0
+	for i, v := range ps[:len(ps)-1] {
+		g := GravityP([]complex128{origin, v, ps[i+1]})
+		s := ((real(v) * imag(ps[i+1])) - (imag(v) * real(ps[i+1]))) / 2
+		xg += s * real(g)
+		yg += s * imag(g)
+		sum += s
+	}
+	return complex(xg/sum, yg/sum)
+}
+
+// CrossC calculates the intersection of the two circle
+func CrossC(r1 float64, p1 complex128, r2 float64, p2 complex128) []complex128 {
+	d := cmplx.Abs(p2 - p1)
+	if d > r1+r2 {
+		return nil
+	}
+
+	if d == r1+r2 {
+		return []complex128{DivP(p1, p2, r1, r2)}
+	}
+	rad := Angle(p2-p1, complex(1, 0))
+	a := math.Acos((d*d + r1*r1 - r2*r2) / (2 * d * r1))
+	x1, y1 := real(p1)+r1*math.Cos(rad+a), imag(p1)+r1*math.Sin(rad+a)
+	x2, y2 := real(p1)+r1*math.Cos(rad-a), imag(p1)+r1*math.Sin(rad-a)
+	return []complex128{complex(x1, y1), complex(x2, y2)}
+}
+
+// CrossLC calculates the intersection of circle and line
+func CrossLC(r float64, p complex128, a, b, c float64) []complex128 {
+	d := Distance(a, b, c, p)
+	if d > r {
+		return nil
+	}
+
+	if d == r {
+		return []complex128{NearestPL(p, a, b, c)}
+	}
+	d, q := a*real(p)+b*imag(p)+c, a*a+b*b
+	s := math.Sqrt(q*r*r - d*d)
+	x1, y1 := (-a*d+b*s)/q+real(p), (-b*d-a*s)/q+imag(p)
+	x2, y2 := (-a*d-b*s)/q+real(p), (-b*d+a*s)/q+imag(p)
+	return []complex128{complex(x1, y1), complex(x2, y2)}
 }
