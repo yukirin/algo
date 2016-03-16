@@ -132,9 +132,9 @@ func NearestPL(p complex128, a, b, c float64) complex128 {
 	return complex(real(p)-a*d/q, imag(p)-b*d/q)
 }
 
-// SMCircle is smallest enclosing circle
+// SECircle is smallest enclosing circle
 // http://eomole.hatenablog.com/entry/20100219/1292052417
-func SMCircle(ps []complex128) (complex128, float64) {
+func SECircle(ps []complex128) (complex128, float64) {
 	p, index := ps[0], 0
 	ratio, r := complex(0.5, 0), 0.0
 
@@ -180,8 +180,8 @@ func GravityPA(ps []complex128) complex128 {
 	ps = append(ps, ps[0])
 	origin, xg, yg, sum := complex(0, 0), 0.0, 0.0, 0.0
 	for i, v := range ps[:len(ps)-1] {
-		g := GravityP([]complex128{origin, v, ps[i+1]})
-		s := ((real(v) * imag(ps[i+1])) - (imag(v) * real(ps[i+1]))) / 2
+		t := []complex128{origin, v, ps[i+1]}
+		g, s := GravityP(t), SignedArea(t)
 		xg += s * real(g)
 		yg += s * imag(g)
 		sum += s
@@ -221,4 +221,9 @@ func CrossLC(r float64, p complex128, a, b, c float64) []complex128 {
 	x1, y1 := (-a*d+b*s)/q+real(p), (-b*d-a*s)/q+imag(p)
 	x2, y2 := (-a*d-b*s)/q+real(p), (-b*d+a*s)/q+imag(p)
 	return []complex128{complex(x1, y1), complex(x2, y2)}
+}
+
+// LinearMap is linear mapping
+func LinearMap(u, v complex128) complex128 {
+	return cmplx.Rect(cmplx.Abs(v)/cmplx.Abs(u), Angle(v, u))
 }

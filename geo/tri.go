@@ -31,3 +31,8 @@ func OrthoP(ps []complex128) complex128 {
 	ta, tb, tc := math.Tan(ra), math.Tan(rb), math.Tan(rc)
 	return (ps[0]*complex(ta, 0) + ps[1]*complex(tb, 0) + ps[2]*complex(tc, 0)) / complex(ta+tb+tc, 0)
 }
+
+// SignedArea is signed area of the triangle
+func SignedArea(ps []complex128) float64 {
+	return imag(cmplx.Conj(ps[1]-ps[0])*(ps[2]-ps[0])) * 0.5
+}
