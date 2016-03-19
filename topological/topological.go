@@ -5,29 +5,30 @@ type node struct {
 	in, out map[int]*node
 }
 
-func initNode(vs []int, edges [][]int) map[int]*node {
+func initNode(vs int, edges [][]int) map[int]*node {
 	m := make(map[int]*node)
 
-	for _, v := range vs {
-		m[v] = &node{
-			num: v,
+	for i := 0; i < vs; i++ {
+		m[i] = &node{
+			num: i,
 			in:  make(map[int]*node),
 			out: make(map[int]*node),
 		}
 	}
 
-	for _, e := range edges {
-		m[e[0]].out[e[1]] = m[e[1]]
-		m[e[1]].in[e[0]] = m[e[0]]
+	for i, edge := range edges {
+		for _, v := range edge {
+			m[i].out[v] = m[v]
+			m[v].in[i] = m[i]
+		}
 	}
 	return m
 }
 
 // Sort is topological sort
-func Sort(vs []int, edges [][]int) []int {
+func Sort(vs int, edges [][]int) []int {
 	ns := initNode(vs, edges)
-
-	ret := make([]int, 0, len(vs))
+	ret := make([]int, 0, vs)
 	var s []*node
 
 	for _, n := range ns {
