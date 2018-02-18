@@ -1,5 +1,5 @@
 # algorithmGo
-アルゴリズムのgolang実装  
+アルゴリズムのgolang、python実装  
 
 ## アルゴリズム一覧
 * A-star
@@ -52,6 +52,7 @@
 * QuickHull
 * 最小包含円
 * 遅延型セグメント木
+* Box-Muller法(python)
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
