@@ -53,6 +53,7 @@
 * 最小包含円
 * 遅延型セグメント木
 * Box-Muller法(python)
+* モンテカルロ法
 
 ## その他
 * [SliceTricks golang/go](https://github.com/golang/go/wiki/SliceTricks)
